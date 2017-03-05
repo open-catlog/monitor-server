@@ -12,6 +12,12 @@
   "author": "zhuyali",
   "license": "MIT",
   "dependencies": {
-    "koa": "^2.0.1"
+    "koa": "^2.0.1",
+    "koa-router": "^5.4.0",
+    "moment": "^2.17.1",
+    "mongoose": "^4.1.5"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }

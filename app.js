@@ -1,21 +1,15 @@
 'use strict';
 
 const koa = require('koa');
-const path = require('path');
-const render = require('koa-ejs');
 
-const router = require('./routers');
+const routers = require('./routers');
 
 var app = new koa();
 
-render(app, {
-  route: path.join(__dirname, 'public'),
-  layout: false,
-  viewExt: 'html',
-  cache: 'false',
-  debug: 'true'
-});
+routers(app);
 
-router(app);
+app.listen(8900, function() {
+  console.log('server start, Listening on port 8900');
+});
 
 module.exports = app;
