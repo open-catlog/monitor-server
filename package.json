@@ -1,0 +1,17 @@
+{
+  "name": "monitor-server",
+  "version": "1.0.0",
+  "description": "Server for monitor-view",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "monitor"
+  ],
+  "author": "zhuyali",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.0.1"
+  }
+}
