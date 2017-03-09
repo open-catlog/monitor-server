@@ -5,11 +5,11 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
-var threadSchema = new Schema({
+var processSchema = new Schema({
   server: {
     type: String
   },
-  threadCount: {
+  processCount: {
     type: Number
   },
   create_at: {
@@ -18,12 +18,12 @@ var threadSchema = new Schema({
   }
 });
 
-threadSchema.statics.add = function (server, threadCount) {
+processSchema.statics.add = function (server, processCount) {
   let context = this;
   return new Promise(function (resolve, reject) {
     context.create({
       server: server,
-      threadCount: threadCount
+      processCount: processCount
     }, function (err, data) {
       if (err) {
         reject(err);
@@ -34,7 +34,7 @@ threadSchema.statics.add = function (server, threadCount) {
   });
 };
 
-threadSchema.statics.getRecentByServer = function (server, seconds) {
+processSchema.statics.getRecentByServer = function (server, seconds) {
   let context = this;
   let now = moment();
   let secondsAgo = moment().subtract(seconds, 'seconds');
@@ -55,7 +55,7 @@ threadSchema.statics.getRecentByServer = function (server, seconds) {
   })
 };
 
-threadSchema.statics.removeRecent = function (minutes) {
+processSchema.statics.removeRecent = function (minutes) {
   let context = this;
   let minutesAgo = moment().subtract(minutes, 'minutes');
   return new Promise(function (resolve, reject) {
@@ -73,7 +73,7 @@ threadSchema.statics.removeRecent = function (minutes) {
   });
 }
 
-mongoose.model('thread', threadSchema);
-var thread = mongoose.model('thread');
+mongoose.model('process', processSchema);
+var process = mongoose.model('process');
 
-module.exports = thread;
+module.exports = process;

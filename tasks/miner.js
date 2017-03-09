@@ -1,10 +1,65 @@
-console.log('miner start');
+'use strict';
 
-var hardwareController = require('../controller/iaas/hardware');
+var punt = require('punt');
 
-setInterval(function () {
-  // 去其他机器采集日志文件
-  // 解析日志文件
-  // 录入数据库
-  // hardwareController.add(data);
-}, 3000);
+var hardwareModel = require('../models/iaas/hardware');
+
+var ioModel = hardwareModel.io;
+var cpuModel = hardwareModel.cpu;
+var diskModel = hardwareModel.disk;
+var memoryModel = hardwareModel.memory;
+var networkModel = hardwareModel.network;
+var processModel = hardwareModel.process;
+
+module.exports = function () {
+
+  var server = punt.bind('0.0.0.0:5000');
+  console.log('miner start');
+
+  server.on('message', function (msg) {
+    var server = msg.split('@')[0];
+    var type = msg.split('@')[1];
+    var value = msg.split('@')[2];
+    switch (type) {
+      case 'cpu':
+        cpuModel.add(server, value);
+        break;
+      case 'disk':
+        let diskInfo = JSON.parse(value);
+        for (let key in diskInfo) {
+          let fileSystem = key;
+          let mount = diskInfo[key].mount;
+          let used = diskInfo[key].used;
+          diskModel.add(server, fileSystem, mount, used);
+        }
+        break;
+      case 'process':
+        processModel.add(server, value);
+        break;
+      case 'io':
+        let ioInfo = JSON.parse(value);
+        for (let key in ioInfo) {
+          let device = key;
+          let read = ioInfo[key].read;
+          let wrtn = ioInfo[key].wrtn;
+          ioModel.add(server, device, read, wrtn);
+        }
+        break;
+      case 'memory':
+        let memoryInfo = JSON.parse(value);
+        let memory = memoryInfo['mem'];
+        let swap = memoryInfo['swap']
+        memoryModel.add(server, memory, swap);
+        break;
+      case 'network':
+        let networkInfo = JSON.parse(value);
+        for (let key in networkInfo) {
+          let netCard = key;
+          let read = networkInfo[key].read;
+          let send = networkInfo[key].send;
+          networkModel.add(server, netCard, read, send);
+        }
+        break;
+    }
+  });
+};

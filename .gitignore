@@ -2,8 +2,7 @@
 node_modules/
 npm-debug.log
 .idea/*
+build/
 Thumbs.db
-
 *.sw*
-
 *.un~

@@ -24,12 +24,14 @@ var networkSchema = new Schema({
   }
 });
 
-networkSchema.statics.add = function (server, threadCount) {
+networkSchema.statics.add = function (server, netCard, read, send) {
   let context = this;
   return new Promise(function (resolve, reject) {
     context.create({
       server: server,
-      threadCount: threadCount
+      netCard: netCard,
+      read: read,
+      send: send
     }, function (err, data) {
       if (err) {
         reject(err);

@@ -31,7 +31,7 @@ diskSchema.statics.add = function (server, fileSystem, mount, used) {
       server: server,
       fileSystem: fileSystem,
       mount: mount,
-      used, used
+      used: used
     }, function (err, data) {
       if (err) {
         reject(err);
