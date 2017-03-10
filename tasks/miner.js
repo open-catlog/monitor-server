@@ -12,11 +12,10 @@ var networkModel = hardwareModel.network;
 var processModel = hardwareModel.process;
 
 module.exports = function () {
-
-  var server = punt.bind('0.0.0.0:5000');
   console.log('miner start');
-
+  var server = punt.bind('0.0.0.0:5000');
   server.on('message', function (msg) {
+    console.log(msg);
     var server = msg.split('@')[0];
     var type = msg.split('@')[1];
     var value = msg.split('@')[2];

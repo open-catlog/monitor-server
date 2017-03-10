@@ -11,6 +11,7 @@ const models = require('./models');
 const config = require('./config');
 const routers = require('./routers');
 const miner = require('./tasks/miner')();
+const cleaner = require('./tasks/cleaner')();
 
 var app = new koa();
 

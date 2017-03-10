@@ -63,7 +63,7 @@ memorySchema.statics.removeRecent = function (minutes) {
   let context = this;
   let minutesAgo = moment().subtract(minutes, 'minutes');
   return new Promise(function (resolve, reject) {
-    context.remove(function (resolve, reject) {
+    context.remove({
       create_at: {
         $lt: minutesAgo.toDate()
       }
