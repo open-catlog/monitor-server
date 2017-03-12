@@ -11,11 +11,12 @@ indexPage.get('/index', function *(next) {
 });
 
 //逻辑路由
-const loginPage = new router();
-loginPage.get('/iaas/getInfo', hardwareController.getHardwareInfo);
+const logicPage = new router();
+logicPage.get('/iaas/getInfo', hardwareController.getHardwareInfo);
+logicPage.get('/iaas/getServers', hardwareController.getServers);
 
 module.exports = function(app) {
   app
     .use(indexPage.routes())
-    .use(loginPage.routes());
+    .use(logicPage.routes());
 };

@@ -1,6 +1,8 @@
 'use strict';
 
+var config = require('../../config');
 var hardwareModel = require('../../models/iaas/hardware');
+
 var ioModel = hardwareModel.io;
 var cpuModel = hardwareModel.cpu;
 var diskModel = hardwareModel.disk;
@@ -90,7 +92,6 @@ exports.getHardwareInfo = function* (next) {
               time: result.create_at
             });
           });
-          console.log(results)
         }
         break;
     }
@@ -103,5 +104,12 @@ exports.getHardwareInfo = function* (next) {
       success: false,
       message: '服务器异常，请稍后再试~'
     }
+  }
+};
+
+exports.getServers = function *(next) {
+  this.body = {
+    success: true,
+    data: config.servers
   }
 };
