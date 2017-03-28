@@ -1,7 +1,8 @@
 'use strict';
 
-var moment = require('moment');
 var mongoose = require('mongoose');
+
+var common = require('../common');
 
 var Schema = mongoose.Schema;
 
@@ -42,44 +43,9 @@ ioSchema.statics.add = function (server, device, read, write) {
   });
 };
 
-ioSchema.statics.getRecentByServer = function (server, seconds) {
-  let context = this;
-  let now = moment();
-  let secondsAgo = moment().subtract(seconds, 'seconds');
-  return new Promise(function (resolve, reject) {
-    context.find({
-      server: server,
-      create_at: {
-        $gte: secondsAgo.toDate(),
-        $lt: now.toDate()
-      }
-    }, function (err, data) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(data);
-      }
-    });
-  })
-};
+ioSchema.statics.getRecentByServer = common.getRecentByServer;
 
-ioSchema.statics.removeRecent = function (minutes) {
-  let context = this;
-  let minutesAgo = moment().subtract(minutes, 'minutes');
-  return new Promise(function (resolve, reject) {
-    context.remove({
-      create_at: {
-        $lt: minutesAgo.toDate()
-      }
-    }, function (err, data) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(data);
-      }
-    });
-  });
-}
+ioSchema.statics.removeRecent = common.removeRecent;
 
 mongoose.model('io', ioSchema);
 var io = mongoose.model('io');

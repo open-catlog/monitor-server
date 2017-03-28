@@ -22,7 +22,7 @@ exports.getHardwareInfo = function* (next) {
     let data = [];
     switch (type) {
       case 'cpu':
-        results = yield cpuModel.getRecentByServer(server, seconds);
+        results = yield cpuModel.getRecentByServer(server, seconds, cpuModel);
         if (results && results.length > 0) {
           results.forEach((result) => {
             data.push({
@@ -33,7 +33,7 @@ exports.getHardwareInfo = function* (next) {
         }
         break;
       case 'process':
-        results = yield processModel.getRecentByServer(server, seconds);
+        results = yield processModel.getRecentByServer(server, seconds, processModel);
         if (results && results.length > 0) {
           results.forEach((result) => {
             data.push({
@@ -44,7 +44,7 @@ exports.getHardwareInfo = function* (next) {
         }
         break;
       case 'disk':
-        results = yield diskModel.getRecentByServer(server, seconds);
+        results = yield diskModel.getRecentByServer(server, seconds, diskModel);
         if (results && results.length) {
           results.forEach((result) => {
             let used = (parseInt(result.used.match(/\d+/)[0]) / 100).toFixed(2);
@@ -57,7 +57,7 @@ exports.getHardwareInfo = function* (next) {
         }
         break;
       case 'io':
-        results = yield ioModel.getRecentByServer(server, seconds);
+        results = yield ioModel.getRecentByServer(server, seconds, ioModel);
         if (results && results.length) {
           results.forEach((result) => {
             data.push({
@@ -70,7 +70,7 @@ exports.getHardwareInfo = function* (next) {
         }
         break;
       case 'network':
-        results = yield networkModel.getRecentByServer(server, seconds);
+        results = yield networkModel.getRecentByServer(server, seconds, networkModel);
         if (results && results.length) {
           results.forEach((result) => {
             data.push({
@@ -83,7 +83,7 @@ exports.getHardwareInfo = function* (next) {
         }
         break;
       case 'memory':
-        results = yield memoryModel.getRecentByServer(server, seconds);
+        results = yield memoryModel.getRecentByServer(server, seconds, memoryModel);
         if (results && results.length) {
           results.forEach((result) => {
             data.push({

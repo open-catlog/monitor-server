@@ -1,7 +1,8 @@
 'use strict';
 
-var moment = require('moment');
 var mongoose = require('mongoose');
+
+var common = require('../common');
 
 var Schema = mongoose.Schema;
 
@@ -38,44 +39,9 @@ memorySchema.statics.add = function (server, memory, swap) {
   });
 };
 
-memorySchema.statics.getRecentByServer = function (server, seconds) {
-  let context = this;
-  let now = moment();
-  let secondsAgo = moment().subtract(seconds, 'seconds');
-  return new Promise(function (resolve, reject) {
-    context.find({
-      server: server,
-      create_at: {
-        $gte: secondsAgo.toDate(),
-        $lt: now.toDate()
-      }
-    }, function (err, data) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(data);
-      }
-    });
-  })
-};
+memorySchema.statics.getRecentByServer = common.getRecentByServer;
 
-memorySchema.statics.removeRecent = function (minutes) {
-  let context = this;
-  let minutesAgo = moment().subtract(minutes, 'minutes');
-  return new Promise(function (resolve, reject) {
-    context.remove({
-      create_at: {
-        $lt: minutesAgo.toDate()
-      }
-    }, function (err, data) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(data);
-      }
-    });
-  });
-}
+memorySchema.statics.removeRecent = common.removeRecent;
 
 mongoose.model('memory', memorySchema);
 var memory = mongoose.model('memory');
