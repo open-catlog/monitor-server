@@ -39,6 +39,7 @@ exports.getTomcatInfo = function* (next) {
           time: tomcatInfo.create_at
         });
       });
+      data.maxThreads = tomcatsInfo[tomcatsInfo.length - 1].maxThreads;
       data.startTime = tomcatsInfo[tomcatsInfo.length - 1].startTime;
       data.upTime = tomcatsInfo[tomcatsInfo.length - 1].uptime;
     }
@@ -46,6 +47,7 @@ exports.getTomcatInfo = function* (next) {
     if (tomcatSessionsInfo && tomcatSessionsInfo.length > 0) {
       tomcatSessionsInfo.forEach((tomcatSessionInfo) => {
         data.sessionInfo.push({
+          context: tomcatSessionInfo.context,
           activeSessions: tomcatSessionInfo.activeSessions,
           sessionCounter: tomcatSessionInfo.sessionCounter,
           time: tomcatSessionInfo.create_at
