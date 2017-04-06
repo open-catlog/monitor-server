@@ -20,7 +20,9 @@
     "koa-router": "^5.4.0",
     "moment": "^2.17.1",
     "mongoose": "^4.1.5",
-    "punt": "^2.3.0"
+    "punt": "^2.3.0",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.0"
   },
   "devDependencies": {
     "koa-static": "^3.0.0",

@@ -36,5 +36,5 @@ exports.getRecentByServer = function (server, seconds, context) {
         resolve(data);
       }
     });
-  })
+  });
 };

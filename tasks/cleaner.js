@@ -13,6 +13,7 @@ var memoryModel = hardwareModel.memory;
 var networkModel = hardwareModel.network;
 var processModel = hardwareModel.process;
 
+var nginxModel = platformModel.nginx;
 var tomcatModel = platformModel.tomcat;
 var tomcatSessionModel = platformModel.tomcatSession;
 

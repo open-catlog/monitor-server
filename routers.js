@@ -4,6 +4,7 @@ const router = require('koa-router');
 
 const hardwareController = require('./controllers/iaas/hardware');
 const tomcatController = require('./controllers/paas/tomcat');
+const nginxController = require('./controllers/paas/nginx');
 
 //单页应用主页面路由
 const indexPage = new router();
@@ -15,8 +16,11 @@ indexPage.get('/index', function *(next) {
 const logicPage = new router();
 logicPage.get('/iaas/getInfo', hardwareController.getHardwareInfo);
 logicPage.get('/iaas/getServers', hardwareController.getServers);
-logicPage.get('/paas/getServers', tomcatController.getServers);
-logicPage.get('/paas/getInfo', tomcatController.getTomcatInfo);
+logicPage.get('/paas/getTomcatServers', tomcatController.getServers);
+logicPage.get('/paas/getTomcatInfo', tomcatController.getTomcatInfo);
+logicPage.get('/paas/getNginxServers', nginxController.getServers);
+logicPage.get('/paas/getAllNginxInfo', nginxController.getAllNginxInfo);
+logicPage.get('/paas/getNginxInfoByUri', nginxController.getNginxInfoByUri);
 
 module.exports = function(app) {
   app
