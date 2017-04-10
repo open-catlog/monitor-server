@@ -7,24 +7,34 @@ var config = require('../../config');
 var platformModel = require('../../models/paas/platform');
 
 var nginxModel = platformModel.nginx;
-var nginxServers = config.nginxServers;
-var nginxPorts = config.nginxPorts;
+var nginxServer = config.nginxServer;
 
-exports.getNginxInfoByUri = function* (next) {
+exports.getNginxInfoByDomainAndUri = function* (next) {
   if (!util.isEmptyObject(this.query)) {
+    let domain = this.query.domain;
     let uri = this.query.uri;
     let hours = this.query.hours;
     try {
-      let data = [];
-      let nginxesInfo = yield nginxModel.getRecentByUri(uri, hours);
+      let data = {};
+      let nginxesInfo = yield nginxModel.getRecentByDomainAndUri(domain, uri, hours);
       if (nginxesInfo && nginxesInfo.length > 0) {
         nginxesInfo.forEach(nginxInfo => {
-          data.push({
-            requestCount: nginxInfo.request_count,
-            requestTime: nginxInfo.request_time,
-            averageTime: nginxInfo.average_time,
-            time: nginxInfo.create_at
-          });
+          if (data[nginxInfo.uri]) {
+            data[nginxInfo.uri].push({
+              requestCount: nginxInfo.request_count,
+              requestTime: nginxInfo.request_time,
+              averageTime: nginxInfo.average_time,
+              time: nginxInfo.create_at
+            });
+          } else {
+            data[nginxInfo.uri] = [];
+            data[nginxInfo.uri].push({
+              requestCount: nginxInfo.request_count,
+              requestTime: nginxInfo.request_time,
+              averageTime: nginxInfo.average_time,
+              time: nginxInfo.create_at
+            });
+          }
         });
       }
       this.body = {
@@ -45,39 +55,37 @@ exports.getNginxInfoByUri = function* (next) {
   }
 };
 
-exports.getAllNginxInfo = function* (next) {
+exports.getAllNginxInfoByDomain = function* (next) {
   if (!util.isEmptyObject(this.query)) {
     let port;
     let self = this;
-    let server = this.query.server;
+    let domain = this.query.domain;
 
-    nginxServers.forEach((nginxServer, index) => {
-      if (nginxServer === server) {
-        port = nginxPorts[index];
-        return;
-      }
-    });
-    yield rp(`http://${server}:${port}/statistics`)
+    yield rp(`http://${nginxServer}/statistics`)
       .then(function (body) {
         if (body) {
           let result = {};
           let records = body.split(/\n/);
           records.forEach((record, index) => {
-            if (index === records.length - 1) {
+            let temp = record.split(':');
+            let domainTemp = temp[0];
+            if (domainTemp !== domain) {
               return;
             }
-            let temp = record.split(':');
-            let uri = temp[0];
+            let uri = temp[1];
             if (uri === '/statistics') {
               return;
             }
-            let param = temp[1];
-            let val = temp[2];
+            let param = temp[2];
+            let val = temp[3];
+            if (param === 'request_count') {
+              console.log(val)
+            }
             if (result[uri]) {
-              result[uri][param] = val.trim();
+              result[uri][param] = val;
             } else {
               result[uri] = {};
-              result[uri][param] = val.trim();
+              result[uri][param] = val;
             }
           });
           self.body = {
@@ -100,9 +108,9 @@ exports.getAllNginxInfo = function* (next) {
   }
 };
 
-exports.getServers = function* (next) {
+exports.getDomains = function* (next) {
   this.body = {
     success: true,
-    data: config.nginxServers
+    data: config.nginxDomains
   }
 };

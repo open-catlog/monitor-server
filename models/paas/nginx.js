@@ -8,7 +8,7 @@ var common = require('../common');
 var Schema = mongoose.Schema;
 
 var nginxSchema = new Schema({
-  server: {
+  domain: {
     type: String
   },
   uri: {
@@ -29,11 +29,11 @@ var nginxSchema = new Schema({
   }
 });
 
-nginxSchema.statics.add = function (server, uri, request_count, request_time, average_time) {
+nginxSchema.statics.add = function (domain, uri, request_count, request_time, average_time) {
   let context = this;
   return new Promise(function (resolve, reject) {
     context.create({
-      server: server,
+      domain: domain,
       uri: uri,
       request_count: request_count,
       request_time: request_time,
@@ -48,12 +48,13 @@ nginxSchema.statics.add = function (server, uri, request_count, request_time, av
   });
 };
 
-nginxSchema.statics.getRecentByUri = function (uri, hours) {
+nginxSchema.statics.getRecentByDomainAndUri = function (domain, uri, hours) {
   let context = this;
   let now = moment();
   let hoursAgo = moment().subtract(hours, 'hours');
   return new Promise(function (resolve, reject) {
     context.find({
+      domain: domain,
       uri: eval('/' + uri + '/'),
       create_at: {
         $gte: hoursAgo.toDate(),

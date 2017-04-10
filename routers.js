@@ -18,9 +18,9 @@ logicPage.get('/iaas/getInfo', hardwareController.getHardwareInfo);
 logicPage.get('/iaas/getServers', hardwareController.getServers);
 logicPage.get('/paas/getTomcatServers', tomcatController.getServers);
 logicPage.get('/paas/getTomcatInfo', tomcatController.getTomcatInfo);
-logicPage.get('/paas/getNginxServers', nginxController.getServers);
-logicPage.get('/paas/getAllNginxInfo', nginxController.getAllNginxInfo);
-logicPage.get('/paas/getNginxInfoByUri', nginxController.getNginxInfoByUri);
+logicPage.get('/paas/getNginxDomains', nginxController.getDomains);
+logicPage.get('/paas/getAllNginxInfoByDomain', nginxController.getAllNginxInfoByDomain);
+logicPage.get('/paas/getNginxInfoByDomainAndUri', nginxController.getNginxInfoByDomainAndUri);
 
 module.exports = function(app) {
   app
