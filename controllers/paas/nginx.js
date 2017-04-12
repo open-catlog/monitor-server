@@ -78,9 +78,6 @@ exports.getAllNginxInfoByDomain = function* (next) {
             }
             let param = temp[2];
             let val = temp[3];
-            if (param === 'request_count') {
-              console.log(val)
-            }
             if (result[uri]) {
               result[uri][param] = val;
             } else {

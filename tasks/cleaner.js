@@ -14,6 +14,7 @@ var networkModel = hardwareModel.network;
 var processModel = hardwareModel.process;
 
 var nginxModel = platformModel.nginx;
+var mysqlModel = platformModel.mysql;
 var tomcatModel = platformModel.tomcat;
 var tomcatSessionModel = platformModel.tomcatSession;
 
@@ -31,6 +32,7 @@ module.exports = function () {
         networkModel.removeRecent(cleanTime, networkModel),
         processModel.removeRecent(cleanTime, processModel),
         memoryModel.removeRecent(cleanTime, memoryModel),
+        mysqlModel.removeRecent(cleanTime, mysqlModel),
         tomcatModel.removeRecent(cleanTime, tomcatModel),
         tomcatSessionModel.removeRecent(cleanTime, tomcatSessionModel)])
         .then(function (data) {
