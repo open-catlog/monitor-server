@@ -23,6 +23,7 @@ logicPage.get('/paas/getNginxDomains', nginxController.getDomains);
 logicPage.get('/paas/getAllNginxInfoByDomain', nginxController.getAllNginxInfoByDomain);
 logicPage.get('/paas/getNginxInfoByDomainAndUri', nginxController.getNginxInfoByDomainAndUri);
 logicPage.get('/paas/getMysqlInfoByServerAndDatabase', mysqlController.getMysqlInfoByServerAndDatabase);
+logicPage.get('/paas/getDatabases', mysqlController.getDatabases);
 
 module.exports = function(app) {
   app

@@ -1,6 +1,7 @@
 'use strict';
 
 var util = require('../../util');
+var config = require('../../config');
 var mysqlServers = require('../../config').mysqlServers;
 var platformModel = require('../../models/paas/platform');
 
@@ -18,6 +19,7 @@ exports.getMysqlInfoByServerAndDatabase = function* (next) {
       if (results && results.length > 0) {
         results.forEach((result) => {
           data.push({
+            connections: result.connections,
             select: result.select,
             insert: result.insert,
             update: result.update,
@@ -32,7 +34,6 @@ exports.getMysqlInfoByServerAndDatabase = function* (next) {
         data: data
       }
     } catch (e) {
-      console.log(e)
       this.body = {
         success: false,
         message: '服务器异常，请稍后再试~'
@@ -43,5 +44,12 @@ exports.getMysqlInfoByServerAndDatabase = function* (next) {
       success: false,
       message: '未获取到请求参数~'
     }
+  }
+};
+
+exports.getDatabases = function* (next) {
+  this.body = {
+    success: true,
+    data: config.databases
   }
 };
