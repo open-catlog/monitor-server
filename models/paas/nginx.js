@@ -1,13 +1,13 @@
 'use strict';
 
-var moment = require('moment');
-var mongoose = require('mongoose');
+const moment = require('moment');
+const mongoose = require('mongoose');
 
-var common = require('../common');
+const common = require('../common');
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var nginxSchema = new Schema({
+const nginxSchema = new Schema({
   domain: {
     type: String
   },
@@ -73,6 +73,6 @@ nginxSchema.statics.getRecentByDomainAndUri = function (domain, uri, hours) {
 nginxSchema.statics.removeRecent = common.removeRecent;
 
 mongoose.model('nginx', nginxSchema);
-var nginx = mongoose.model('nginx');
+const nginx = mongoose.model('nginx');
 
 module.exports = nginx;

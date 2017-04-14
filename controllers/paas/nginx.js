@@ -1,16 +1,16 @@
 'use strict';
 
-var rp = require('request-promise');
+const _ = require('lodash');
+const rp = require('request-promise');
 
-var util = require('../../util');
-var config = require('../../config');
-var platformModel = require('../../models/paas/platform');
+const config = require('../../config');
+const platformModel = require('../../models/paas/platform');
 
-var nginxModel = platformModel.nginx;
-var nginxServer = config.nginxServer;
+const nginxModel = platformModel.nginx;
+const nginxServer = config.nginxServer;
 
 exports.getNginxInfoByDomainAndUri = function* (next) {
-  if (!util.isEmptyObject(this.query)) {
+  if (!_.isEmpty(this.query)) {
     let domain = this.query.domain;
     let uri = this.query.uri;
     let hours = this.query.hours;
@@ -56,7 +56,7 @@ exports.getNginxInfoByDomainAndUri = function* (next) {
 };
 
 exports.getAllNginxInfoByDomain = function* (next) {
-  if (!util.isEmptyObject(this.query)) {
+  if (!_.isEmpty(this.query)) {
     let port;
     let self = this;
     let domain = this.query.domain;

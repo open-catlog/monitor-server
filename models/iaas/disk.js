@@ -1,12 +1,12 @@
 'use strict';
 
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var common = require('../common');
+const common = require('../common');
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var diskSchema = new Schema({
+const diskSchema = new Schema({
   server: {
     type: String
   },
@@ -48,6 +48,6 @@ diskSchema.statics.getRecentByServer = common.getRecentByServer;
 diskSchema.statics.removeRecent = common.removeRecent;
 
 mongoose.model('disk', diskSchema);
-var disk = mongoose.model('disk');
+const disk = mongoose.model('disk');
 
 module.exports = disk;

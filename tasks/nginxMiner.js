@@ -1,13 +1,13 @@
 'use strict';
 
-var async = require('async');
-var request = require('request');
+const async = require('async');
+const request = require('request');
 
-var config = require('../config');
-var platformModel = require('../models/paas/platform');
+const config = require('../config');
+const platformModel = require('../models/paas/platform');
 
-var nginxModel = platformModel.nginx;
-var nginxServer = config.nginxServer;
+const nginxModel = platformModel.nginx;
+const nginxServer = config.nginxServer;
 
 module.exports = function () {
   async.whilst(

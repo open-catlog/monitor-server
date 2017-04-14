@@ -1,13 +1,13 @@
 'use strict';
 
-var moment = require('moment');
-var mongoose = require('mongoose');
+const moment = require('moment');
+const mongoose = require('mongoose');
 
-var common = require('../common');
+const common = require('../common');
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var mysqlSchema = new Schema({
+const mysqlSchema = new Schema({
   server: {
     type: String
   },
@@ -81,6 +81,6 @@ mysqlSchema.statics.getRecentByServerAndDatabase = function (server, database, s
 mysqlSchema.statics.removeRecent = common.removeRecent;
 
 mongoose.model('mysql', mysqlSchema);
-var mysql = mongoose.model('mysql');
+const mysql = mongoose.model('mysql');
 
 module.exports = mysql;

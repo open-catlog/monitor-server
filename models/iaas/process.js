@@ -1,12 +1,12 @@
 'use strict';
 
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var common = require('../common');
+const common = require('../common');
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var processSchema = new Schema({
+const processSchema = new Schema({
   server: {
     type: String
   },
@@ -40,6 +40,6 @@ processSchema.statics.getRecentByServer = common.getRecentByServer;
 processSchema.statics.removeRecent = common.removeRecent;
 
 mongoose.model('process', processSchema);
-var process = mongoose.model('process');
+const process = mongoose.model('process');
 
 module.exports = process;

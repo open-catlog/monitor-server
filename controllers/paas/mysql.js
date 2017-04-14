@@ -1,14 +1,15 @@
 'use strict';
 
-var util = require('../../util');
-var config = require('../../config');
-var mysqlServers = require('../../config').mysqlServers;
-var platformModel = require('../../models/paas/platform');
+const _ = require('lodash');
 
-var mysqlModel = platformModel.mysql;
+const config = require('../../config');
+const mysqlServers = require('../../config').mysqlServers;
+const platformModel = require('../../models/paas/platform');
+
+const mysqlModel = platformModel.mysql;
 
 exports.getMysqlInfoByServerAndDatabase = function* (next) {
-  if (!util.isEmptyObject(this.query)) {
+  if (!_.isEmpty(this.query)) {
     let server = mysqlServers[this.query.server];
     let seconds = this.query.seconds;
     let database = this.query.database;

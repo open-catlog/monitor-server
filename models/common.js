@@ -1,6 +1,6 @@
 'use strict';
 
-var moment = require('moment');
+const moment = require('moment');
 
 exports.removeRecent = function (minutes, context) {
   let minutesAgo = moment().subtract(minutes, 'minutes');

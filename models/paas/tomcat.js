@@ -1,12 +1,12 @@
 'use strict';
 
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var common = require('../common');
+const common = require('../common');
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var tomcatSchema = new Schema({
+const tomcatSchema = new Schema({
   server: {
     type: String
   },
@@ -41,6 +41,6 @@ tomcatSchema.statics.getRecentByServer = common.getRecentByServer;
 tomcatSchema.statics.removeRecent = common.removeRecent;
 
 mongoose.model('tomcat', tomcatSchema);
-var tomcat = mongoose.model('tomcat');
+const tomcat = mongoose.model('tomcat');
 
 module.exports = tomcat;

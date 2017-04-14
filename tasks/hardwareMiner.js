@@ -1,23 +1,23 @@
 'use strict';
 
-var punt = require('punt');
+const punt = require('punt');
 
-var hardwareModel = require('../models/iaas/hardware');
+const hardwareModel = require('../models/iaas/hardware');
 
-var ioModel = hardwareModel.io;
-var cpuModel = hardwareModel.cpu;
-var diskModel = hardwareModel.disk;
-var memoryModel = hardwareModel.memory;
-var networkModel = hardwareModel.network;
-var processModel = hardwareModel.process;
+const ioModel = hardwareModel.io;
+const cpuModel = hardwareModel.cpu;
+const diskModel = hardwareModel.disk;
+const memoryModel = hardwareModel.memory;
+const networkModel = hardwareModel.network;
+const processModel = hardwareModel.process;
 
 module.exports = function () {
   console.log('hardwareMiner start');
-  var server = punt.bind('0.0.0.0:5000');
+  const server = punt.bind('0.0.0.0:5000');
   server.on('message', function (msg) {
-    var server = msg.split('@')[0];
-    var type = msg.split('@')[1];
-    var value = msg.split('@')[2];
+    const server = msg.split('@')[0];
+    const type = msg.split('@')[1];
+    const value = msg.split('@')[2];
     switch (type) {
       case 'cpu':
         cpuModel.add(server, value);

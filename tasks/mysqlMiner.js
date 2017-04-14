@@ -1,19 +1,19 @@
 'use strict';
 
-var punt = require('punt');
+const punt = require('punt');
 
-var platformModel = require('../models/paas/platform');
+const platformModel = require('../models/paas/platform');
 
-var mysqlModel = platformModel.mysql;
+const mysqlModel = platformModel.mysql;
 
 module.exports = function () {
   console.log('mysqlMiner start');
-  var server = punt.bind('0.0.0.0:5001');
+  let server = punt.bind('0.0.0.0:5001');
   server.on('message', function (msg) {
-    var server = msg.split('@')[0];
-    var database = msg.split('@')[1];
-    var type = msg.split('@')[2];
-    var value = msg.split('@')[3];
+    let server = msg.split('@')[0];
+    let database = msg.split('@')[1];
+    let type = msg.split('@')[2];
+    let value = msg.split('@')[3];
 
     switch(type) {
       case 'throughput':

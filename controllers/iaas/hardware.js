@@ -1,18 +1,19 @@
 'use strict';
 
-var util = require('../../util');
-var config = require('../../config');
-var hardwareModel = require('../../models/iaas/hardware');
+const _ = require('lodash');
 
-var ioModel = hardwareModel.io;
-var cpuModel = hardwareModel.cpu;
-var diskModel = hardwareModel.disk;
-var memoryModel = hardwareModel.memory;
-var networkModel = hardwareModel.network;
-var processModel = hardwareModel.process;
+const config = require('../../config');
+const hardwareModel = require('../../models/iaas/hardware');
+
+const ioModel = hardwareModel.io;
+const cpuModel = hardwareModel.cpu;
+const diskModel = hardwareModel.disk;
+const memoryModel = hardwareModel.memory;
+const networkModel = hardwareModel.network;
+const processModel = hardwareModel.process;
 
 exports.getHardwareInfo = function* (next) {
-  if (!util.isEmptyObject(this.query)) {
+  if (!_.isEmpty(this.query)) {
     let server = this.query.server;
     let seconds = this.query.seconds;
     let type = this.query.type;

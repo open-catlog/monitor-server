@@ -1,12 +1,12 @@
 'use strict';
 
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var common = require('../common');
+const common = require('../common');
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var cpuSchema = new Schema({
+const cpuSchema = new Schema({
   server: {
     type: String
   },
@@ -40,6 +40,6 @@ cpuSchema.statics.getRecentByServer = common.getRecentByServer;
 cpuSchema.statics.removeRecent = common.removeRecent;
 
 mongoose.model('cpu', cpuSchema);
-var cpu = mongoose.model('cpu');
+const cpu = mongoose.model('cpu');
 
 module.exports = cpu;

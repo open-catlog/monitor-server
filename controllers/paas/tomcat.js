@@ -1,14 +1,15 @@
 'use strict';
 
-var util = require('../../util');
-var config = require('../../config');
-var platformModel = require('../../models/paas/platform');
+const _ = require('lodash');
 
-var tomcatModel = platformModel.tomcat;
-var tomcatSessionModel = platformModel.tomcatSession;
+const config = require('../../config');
+const platformModel = require('../../models/paas/platform');
+
+const tomcatModel = platformModel.tomcat;
+const tomcatSessionModel = platformModel.tomcatSession;
 
 exports.getTomcatInfo = function* (next) {
-  if (!util.isEmptyObject(this.query)) {
+  if (!_.isEmpty(this.query)) {
     let server = this.query.server;
     let seconds = this.query.seconds;
 

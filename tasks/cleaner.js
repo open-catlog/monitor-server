@@ -1,24 +1,24 @@
 'use strict';
 
-var async = require('async');
+const async = require('async');
 
-var config = require('../config');
-var hardwareModel = require('../models/iaas/hardware');
-var platformModel = require('../models/paas/platform');
+const config = require('../config');
+const hardwareModel = require('../models/iaas/hardware');
+const platformModel = require('../models/paas/platform');
 
-var ioModel = hardwareModel.io;
-var cpuModel = hardwareModel.cpu;
-var diskModel = hardwareModel.disk;
-var memoryModel = hardwareModel.memory;
-var networkModel = hardwareModel.network;
-var processModel = hardwareModel.process;
+const ioModel = hardwareModel.io;
+const cpuModel = hardwareModel.cpu;
+const diskModel = hardwareModel.disk;
+const memoryModel = hardwareModel.memory;
+const networkModel = hardwareModel.network;
+const processModel = hardwareModel.process;
 
-var nginxModel = platformModel.nginx;
-var mysqlModel = platformModel.mysql;
-var tomcatModel = platformModel.tomcat;
-var tomcatSessionModel = platformModel.tomcatSession;
+const nginxModel = platformModel.nginx;
+const mysqlModel = platformModel.mysql;
+const tomcatModel = platformModel.tomcat;
+const tomcatSessionModel = platformModel.tomcatSession;
 
-var cleanTime = config.cleanTime;
+const cleanTime = config.cleanTime;
 
 module.exports = function () {
   console.log('cleaner start');
