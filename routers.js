@@ -18,6 +18,7 @@ indexPage.get('/',
   function* (next) {
     yield this.render('index');
   });
+indexPage.get('/getUserInfo', authController.getUserInfo);
 
 //逻辑路由
 const logicPage = new router();

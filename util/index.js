@@ -24,6 +24,27 @@ exports.hasUserInfoFromCookie = function (reqCookie) {
   }
 };
 
+exports.getUserInfoFromCookie = function (reqCookie) {
+  if (!reqCookie) {
+    return null;
+  }
+  try {
+    let cookie = Cookie.parse(reqCookie);
+		if(!cookie || !cookie.userInfo) {
+			return null;
+		}
+		let userInfo = decodeURI(cookie.userInfo);
+		let userInfoStr = userInfo.replace(/\\/g, '');
+		let userInfoObj = null;
+		if(userInfoStr) {
+			userInfoObj = JSON.parse(userInfoStr);
+		}
+		return userInfoObj;
+  } catch (e) {
+    return null;
+  }
+};
+
 exports.ticketCheck = function (ticket) {
   return new Promise(function (resolve, reject) {
     let params = {
