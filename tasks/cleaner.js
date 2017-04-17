@@ -5,6 +5,7 @@ const async = require('async');
 const config = require('../config');
 const hardwareModel = require('../models/iaas/hardware');
 const platformModel = require('../models/paas/platform');
+const pageviewModel = require('../models/saas/pageview');
 
 const ioModel = hardwareModel.io;
 const cpuModel = hardwareModel.cpu;
@@ -44,6 +45,24 @@ module.exports = function () {
           setTimeout(function () {
             callback(null);
           }, cleanTime * 60 * 1000);
+        });
+    }
+  );
+
+  async.whilst(
+    function () { return true; },
+    function (callback) {
+      pageviewModel
+        .removeWeekAgo()
+        .then(function (data) {
+          setTimeout(function () {
+            callback(null);
+          }, 24 * 60 * 60 * 1000);
+        })
+        .catch(function (err) {
+          setTimeout(function () {
+            callback(null);
+          }, 24 * 60 * 60 * 1000);
         });
     }
   );

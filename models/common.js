@@ -17,7 +17,7 @@ exports.removeRecent = function (minutes, context) {
       }
     });
   });
-}
+};
 
 exports.getRecentByServer = function (server, seconds, context) {
   let now = moment();

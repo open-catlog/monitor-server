@@ -7,6 +7,7 @@ const nginxController = require('./controllers/paas/nginx');
 const mysqlController = require('./controllers/paas/mysql');
 const tomcatController = require('./controllers/paas/tomcat');
 const hardwareController = require('./controllers/iaas/hardware');
+const mapController = require('./controllers/saas/map');
 
 const routerRoot = new router();
 routerRoot.all('/ticket_login', authController.ticketLogin);
@@ -31,6 +32,9 @@ logicPage.get('/paas/getAllNginxInfoByDomain', nginxController.getAllNginxInfoBy
 logicPage.get('/paas/getNginxInfoByDomainAndUri', nginxController.getNginxInfoByDomainAndUri);
 logicPage.get('/paas/getMysqlInfoByServerAndDatabase', mysqlController.getMysqlInfoByServerAndDatabase);
 logicPage.get('/paas/getDatabases', mysqlController.getDatabases);
+logicPage.get('/saas/getDomains', mapController.getDomains);
+logicPage.get('/saas/getPVByDomainAndDate', mapController.getPVByDomainAndDate);
+logicPage.get('/saas/getUVByDomainAndDate', mapController.getUVByDomainAndDate);
 
 module.exports = function (app) {
   app
