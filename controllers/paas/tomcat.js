@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 
-const config = require('../../config');
+const configModel = require('../../models/config/config');
 const platformModel = require('../../models/paas/platform');
 
 const tomcatModel = platformModel.tomcat;
@@ -75,8 +75,23 @@ exports.getTomcatInfo = function* (next) {
 };
 
 exports.getServers = function* (next) {
-  this.body = {
-    success: true,
-    data: config.tomcatServers
+  try {
+    let data = [];
+    let result = yield configModel.getByType('tomcat');
+    if (result && result.length) {
+      result.forEach(val => {
+        data.push(val.name);
+      });
+    }
+    console.log(data)
+    this.body = {
+      success: true,
+      data: data
+    }
+  } catch (e) {
+    this.body = {
+      success: false,
+      message: '服务器异常，请稍后再试~'
+    }
   }
 };

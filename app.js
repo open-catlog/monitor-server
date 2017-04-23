@@ -6,6 +6,7 @@ const cors = require('koa-cors');
 const render = require('koa-ejs');
 const serve = require('koa-static');
 const detect = require('detect-port');
+const bodyParser = require('koa-bodyparser');
 
 const models = require('./models');
 const config = require('./config');
@@ -31,6 +32,7 @@ const options = {
 
 app.use(serve('.'));
 app.use(cors(options));
+app.use(bodyParser());
 
 routers(app);
 

@@ -4,6 +4,7 @@ const _ = require('lodash');
 const rp = require('request-promise');
 
 const config = require('../../config');
+const configModel = require('../../models/config/config');
 const platformModel = require('../../models/paas/platform');
 
 const nginxModel = platformModel.nginx;
@@ -13,6 +14,7 @@ exports.getNginxInfoByDomainAndUri = function* (next) {
   if (!_.isEmpty(this.query)) {
     let domain = this.query.domain;
     let uri = this.query.uri;
+    uri = uri.charAt(0) === '/' ? uri.slice(1): uri;
     let hours = this.query.hours;
     try {
       let data = {};
@@ -106,8 +108,23 @@ exports.getAllNginxInfoByDomain = function* (next) {
 };
 
 exports.getDomains = function* (next) {
-  this.body = {
-    success: true,
-    data: config.nginxDomains
+  try {
+    let data = [];
+    let result = yield configModel.getByType('nginx');
+    if (result && result.length) {
+      result.forEach(val => {
+        data.push(val.name);
+      });
+    }
+    console.log(data)
+    this.body = {
+      success: true,
+      data: data
+    }
+  } catch (e) {
+    this.body = {
+      success: false,
+      message: '服务器异常，请稍后再试~'
+    }
   }
 };

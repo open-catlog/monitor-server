@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 
-const config = require('../../config');
+const configModel = require('../../models/config/config');
 const mysqlServers = require('../../config').mysqlServers;
 const platformModel = require('../../models/paas/platform');
 
@@ -49,8 +49,23 @@ exports.getMysqlInfoByServerAndDatabase = function* (next) {
 };
 
 exports.getDatabases = function* (next) {
-  this.body = {
-    success: true,
-    data: config.databases
+  try {
+    let data = [];
+    let result = yield configModel.getByType('mysql');
+    if (result && result.length) {
+      result.forEach(val => {
+        data.push(val.name);
+      });
+    }
+    console.log(data)
+    this.body = {
+      success: true,
+      data: data
+    }
+  } catch (e) {
+    this.body = {
+      success: false,
+      message: '服务器异常，请稍后再试~'
+    }
   }
 };

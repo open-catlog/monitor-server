@@ -2,12 +2,13 @@
 
 const router = require('koa-router');
 
+const mapController = require('./controllers/saas/map');
 const authController = require('./controllers/auth/auth');
 const nginxController = require('./controllers/paas/nginx');
 const mysqlController = require('./controllers/paas/mysql');
 const tomcatController = require('./controllers/paas/tomcat');
+const configController = require('./controllers/config/config');
 const hardwareController = require('./controllers/iaas/hardware');
-const mapController = require('./controllers/saas/map');
 
 const routerRoot = new router();
 routerRoot.all('/ticket_login', authController.ticketLogin);
@@ -35,6 +36,8 @@ logicPage.get('/paas/getDatabases', mysqlController.getDatabases);
 logicPage.get('/saas/getDomains', mapController.getDomains);
 logicPage.get('/saas/getPVByDomainAndDate', mapController.getPVByDomainAndDate);
 logicPage.get('/saas/getUVByDomainAndDate', mapController.getUVByDomainAndDate);
+logicPage.post('/config/setConfig', configController.setConfig);
+logicPage.get('/config/getConfig', configController.getConfig);
 
 module.exports = function (app) {
   app

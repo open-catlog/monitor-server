@@ -19,8 +19,10 @@ module.exports = function () {
       let result = {};
       request(`http://${nginxServer}/statistics`, function (error, response, body) {
         if (body) {
+          let counter = 0;
           let records = body.split(/\n/);
           records.forEach((record, index) => {
+            counter++;
             let temp = record.split(':');
             let domain = temp[0];
             let uriOrIp = temp[1];
@@ -40,7 +42,8 @@ module.exports = function () {
                 result[domain][uriOrIp][param] = val;
               }
             } else {
-              pvModel
+              setTimeout(function () {
+                pvModel
                 .getByDateAndDomainAndIp(date, domain, uriOrIp)
                 .then(data => {
                   if (data.length) {
@@ -49,13 +52,17 @@ module.exports = function () {
                     pvModel.updatePV(_id, _pv + parseInt(val))
                   } else {
                     request(`http://ip.taobao.com/service/getIpInfo.php?ip=${uriOrIp}`, function (err, response, body) {
-                      if (body.code === 0 && body.data.country_id === 'CN') {
-                        let province = body.data.region;
-                        pvModel.add(date, domain, uriOrIp, val, province);
+                      if (body) {
+                        let result = JSON.parse(decodeURI(body));
+                        if (result.code === 0 && result.data.country_id === 'CN') {
+                          let province = result.data.region;
+                          pvModel.add(date, domain, uriOrIp, val, province);
+                        }
                       }
                     });
                   }
-                });
+                })
+              }, counter * 150);
             }
           });
           Object.keys(result).forEach(domain => {
