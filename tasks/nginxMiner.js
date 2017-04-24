@@ -67,9 +67,6 @@ module.exports = function () {
           });
           Object.keys(result).forEach(domain => {
             Object.keys(result[domain]).forEach(uriOrIp => {
-              if (uriOrIp === '/lua_status') {
-                return;
-              }
               nginxModel.add(domain, uriOrIp, result[domain][uriOrIp].request_count, result[domain][uriOrIp].request_time, result[domain][uriOrIp].average_request_time);
             })
           });
