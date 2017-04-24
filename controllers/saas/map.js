@@ -15,6 +15,7 @@ exports.getPVByDomainAndDate = function* (next) {
     try {
       let pvsInfo = yield pageviewModel.getPVByDateAndDomain(date, domain);
       let data = {};
+      let ips = {};
       if (pvsInfo && pvsInfo.length) {
         pvsInfo.forEach(pvInfo => {
           let province = pvInfo.province;
@@ -25,11 +26,21 @@ exports.getPVByDomainAndDate = function* (next) {
               break;
             }
           }
-          let pv = pvInfo.pv;
-          if (data[province]) {
-            data[province] = data[province] + pv;
+
+          let ip = pvInfo.ip;
+          if (ips[province]) {
+            if (!ips[province].find(ele => ele === ip)) {
+              ips[province].push(ip);
+              let pv = pvInfo.pv;
+              if (data[province]) {
+                data[province] = data[province] + pv;
+              } else {
+                data[province] = pv;
+              }
+            }
           } else {
-            data[province] = pv;
+            ips[province] = [];
+            ips[province].push(ip);
           }
         });
       }
@@ -59,6 +70,7 @@ exports.getUVByDomainAndDate = function* (next) {
     try {
       let pvsInfo = yield pageviewModel.getPVByDateAndDomain(date, domain);
       let data = {};
+      let ips = {};
       if (pvsInfo && pvsInfo.length) {
         pvsInfo.forEach(pvInfo => {
           let province = pvInfo.province;
@@ -69,10 +81,20 @@ exports.getUVByDomainAndDate = function* (next) {
               break;
             }
           }
-          if (data[province]) {
-            data[province] = data[province] + 1;
+
+          let ip = pvInfo.ip;
+          if (ips[province]) {
+            if (!ips[province].find(ele => ele === ip)) {
+              ips[province].push(ip);
+              if (data[province]) {
+                data[province] = data[province] + 1;
+              } else {
+                data[province] = 1;
+              }
+            }
           } else {
-            data[province] = 1;
+            ips[province] = [];
+            ips[province].push(ip);
           }
         });
       }
