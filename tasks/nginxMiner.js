@@ -17,7 +17,7 @@ module.exports = function () {
     function () { return true; },
     function (callback) {
       let result = {};
-      request(`http://${nginxServer}/statistics`, function (error, response, body) {
+      request(config.statisticsServer, function (error, response, body) {
         if (body) {
           let counter = 0;
           let records = body.split(/\n/);
@@ -67,7 +67,7 @@ module.exports = function () {
           });
           Object.keys(result).forEach(domain => {
             Object.keys(result[domain]).forEach(uriOrIp => {
-              if (uriOrIp === '/statistics') {
+              if (uriOrIp === '/lua_status') {
                 return;
               }
               nginxModel.add(domain, uriOrIp, result[domain][uriOrIp].request_count, result[domain][uriOrIp].request_time, result[domain][uriOrIp].average_request_time);

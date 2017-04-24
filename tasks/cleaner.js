@@ -20,6 +20,7 @@ const tomcatModel = platformModel.tomcat;
 const tomcatSessionModel = platformModel.tomcatSession;
 
 const cleanTime = config.cleanTime;
+const cleanDay = config.cleanDay;
 
 module.exports = function () {
   console.log('cleaner start');
@@ -52,17 +53,18 @@ module.exports = function () {
   async.whilst(
     function () { return true; },
     function (callback) {
-      pageviewModel
-        .removeWeekAgo()
+      Promise
+        .all([pageviewModel.removeWeekAgo(),
+        nginxModel.removeWeekAgo()])
         .then(function (data) {
           setTimeout(function () {
             callback(null);
-          }, 24 * 60 * 60 * 1000);
+          }, cleanDay * 24 * 60 * 60 * 1000);
         })
         .catch(function (err) {
           setTimeout(function () {
             callback(null);
-          }, 24 * 60 * 60 * 1000);
+          }, cleanDay * 24 * 60 * 60 * 1000);
         });
     }
   );

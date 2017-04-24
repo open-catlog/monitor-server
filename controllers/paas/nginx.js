@@ -116,7 +116,6 @@ exports.getDomains = function* (next) {
         data.push(val.name);
       });
     }
-    console.log(data)
     this.body = {
       success: true,
       data: data

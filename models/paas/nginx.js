@@ -70,7 +70,24 @@ nginxSchema.statics.getRecentByDomainAndUri = function (domain, uri, hours) {
   });
 };
 
-nginxSchema.statics.removeRecent = common.removeRecent;
+nginxSchema.statics.removeWeekAgo = function () {
+  let context = this;
+  let day = moment();
+  let weekAgo = day.subtract(7, 'days');
+  return new Promise(function (resolve, reject) {
+    context.remove({
+      create_at: {
+        $lt: weekAgo
+      }
+    }, function (err, data) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    });
+  });
+};
 
 mongoose.model('nginx', nginxSchema);
 const nginx = mongoose.model('nginx');

@@ -3,6 +3,7 @@
 const _ = require('lodash');
 
 const config = require('../../config');
+const configModel = require('../../models/config/config');
 const pageviewModel = require('../../models/saas/pageview');
 
 const suffixes = ['省', '市', '回族自治区', '维吾尔自治区', '自治区'];
@@ -93,9 +94,23 @@ exports.getUVByDomainAndDate = function* (next) {
   }
 };
 
-exports.getDomains = function () {
-  this.body = {
-    success: true,
-    data: config.serviceDomains
+exports.getDomains = function* (next) {
+  try {
+    let data = [];
+    let result = yield configModel.getByType('nginx');
+    if (result && result.length) {
+      result.forEach(val => {
+        data.push(val.name);
+      });
+    }
+    this.body = {
+      success: true,
+      data: data
+    }
+  } catch (e) {
+    this.body = {
+      success: false,
+      message: '服务器异常，请稍后再试~'
+    }
   }
 };
