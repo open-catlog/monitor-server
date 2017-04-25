@@ -33,9 +33,8 @@ logicPage.get('/paas/getAllNginxInfoByDomain', nginxController.getAllNginxInfoBy
 logicPage.get('/paas/getNginxInfoByDomainAndUri', nginxController.getNginxInfoByDomainAndUri);
 logicPage.get('/paas/getMysqlInfoByServerAndDatabase', mysqlController.getMysqlInfoByServerAndDatabase);
 logicPage.get('/paas/getDatabases', mysqlController.getDatabases);
-logicPage.get('/saas/getDomains', mapController.getDomains);
-logicPage.get('/saas/getPVByDomainAndDate', mapController.getPVByDomainAndDate);
-logicPage.get('/saas/getUVByDomainAndDate', mapController.getUVByDomainAndDate);
+logicPage.get('/saas/getPVByDate', mapController.getPVByDate);
+logicPage.get('/saas/getUVByDate', mapController.getUVByDate);
 logicPage.post('/config/setConfig', configController.setConfig);
 logicPage.get('/config/getConfig', configController.getConfig);
 

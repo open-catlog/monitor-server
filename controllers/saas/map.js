@@ -8,12 +8,11 @@ const pageviewModel = require('../../models/saas/pageview');
 
 const suffixes = ['省', '市', '回族自治区', '维吾尔自治区', '自治区'];
 
-exports.getPVByDomainAndDate = function* (next) {
+exports.getPVByDate = function* (next) {
   if (!_.isEmpty(this.query)) {
-    let domain = this.query.domain;
     let date = this.query.date;
     try {
-      let pvsInfo = yield pageviewModel.getPVByDateAndDomain(date, domain);
+      let pvsInfo = yield pageviewModel.getPVByDate(date);
       let data = {};
       let ips = {};
       if (pvsInfo && pvsInfo.length) {
@@ -62,13 +61,12 @@ exports.getPVByDomainAndDate = function* (next) {
   }
 };
 
-exports.getUVByDomainAndDate = function* (next) {
+exports.getUVByDate = function* (next) {
   if (!_.isEmpty(this.query)) {
-    let domain = this.query.domain;
     let date = this.query.date;
 
     try {
-      let pvsInfo = yield pageviewModel.getPVByDateAndDomain(date, domain);
+      let pvsInfo = yield pageviewModel.getPVByDate(date);
       let data = {};
       let ips = {};
       if (pvsInfo && pvsInfo.length) {
@@ -112,27 +110,6 @@ exports.getUVByDomainAndDate = function* (next) {
     this.body = {
       success: false,
       message: '未获取到请求参数~'
-    }
-  }
-};
-
-exports.getDomains = function* (next) {
-  try {
-    let data = [];
-    let result = yield configModel.getByType('nginx');
-    if (result && result.length) {
-      result.forEach(val => {
-        data.push(val.name);
-      });
-    }
-    this.body = {
-      success: true,
-      data: data
-    }
-  } catch (e) {
-    this.body = {
-      success: false,
-      message: '服务器异常，请稍后再试~'
     }
   }
 };

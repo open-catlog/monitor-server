@@ -46,6 +46,21 @@ pageviewSchema.statics.add = function (date, domain, ip, pv, province) {
   });
 };
 
+pageviewSchema.statics.getProvinceByIp = function (ip) {
+  let context = this;
+  return new Promise(function (resolve, reject) {
+    context.find({
+      ip: ip
+    }, function (err, data) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    });
+  });
+};
+
 pageviewSchema.statics.getByDateAndDomainAndIp = function (date, domain, ip) {
   let context = this;
   return new Promise(function (resolve, reject) {
@@ -69,14 +84,14 @@ pageviewSchema.statics.updatePV = function (id, pv) {
     context.update({
       _id: id
     }, {
-      $set: {pv: pv}
-    }, function (err, data) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(data);
-      }
-    });
+        $set: { pv: pv }
+      }, function (err, data) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data);
+        }
+      });
   });
 };
 
@@ -100,12 +115,11 @@ pageviewSchema.statics.removeWeekAgo = function () {
   });
 };
 
-pageviewSchema.statics.getPVByDateAndDomain = function (date, domain) {
+pageviewSchema.statics.getPVByDate = function (date) {
   let context = this;
   return new Promise(function (resolve, reject) {
     context.find({
-      date: date,
-      domain: domain
+      date: date
     }, function (err, data) {
       if (err) {
         reject(err);
