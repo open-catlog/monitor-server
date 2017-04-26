@@ -25,21 +25,27 @@ exports.getPVByDate = function* (next) {
               break;
             }
           }
-
+          let domain = pvInfo.domain;
           let ip = pvInfo.ip;
           if (ips[province]) {
-            if (!ips[province].find(ele => ele === ip)) {
-              ips[province].push(ip);
-              let pv = pvInfo.pv;
-              if (data[province]) {
-                data[province] = data[province] + pv;
-              } else {
-                data[province] = pv;
+            if (ips[province][domain]) {
+              if (!ips[province][domain].find(ele => ele === ip)) {
+                ips[province][domain].push(ip);
+                let pv = pvInfo.pv;
+                if (data[province]) {
+                  data[province] = data[province] + pv;
+                } else {
+                  data[province] = pv;
+                }
               }
+            } else {
+              ips[province][domain] = [];
+              ips[province][domain].push(ip);
             }
           } else {
-            ips[province] = [];
-            ips[province].push(ip);
+            ips[province] = {};
+            ips[province][domain] = [];
+            ips[province][domain].push(ip);
           }
         });
       }
@@ -79,20 +85,26 @@ exports.getUVByDate = function* (next) {
               break;
             }
           }
-
+          let domain = pvInfo.domain;
           let ip = pvInfo.ip;
           if (ips[province]) {
-            if (!ips[province].find(ele => ele === ip)) {
-              ips[province].push(ip);
-              if (data[province]) {
-                data[province] = data[province] + 1;
-              } else {
-                data[province] = 1;
+            if (ips[province][domain]) {
+              if (!ips[province][domain].find(ele => ele === ip)) {
+                ips[province][domain].push(ip);
+                if (data[province]) {
+                  data[province] = data[province] + 1;
+                } else {
+                  data[province] = 1;
+                }
               }
+            } else {
+              ips[province][domain] = [];
+              ips[province][domain].push(ip);
             }
           } else {
-            ips[province] = [];
-            ips[province].push(ip);
+            ips[province] = {};
+            ips[province][domain] = [];
+            ips[province][domain].push(ip);
           }
         });
       }

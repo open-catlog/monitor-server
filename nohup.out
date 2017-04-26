@@ -1,0 +1,14 @@
+2017-04-26T14:58:06.877+0800 I CONTROL  [initandlisten] MongoDB starting : pid=45236 port=27017 dbpath=/data/db 64-bit host=Julia.local
+2017-04-26T14:58:06.879+0800 I CONTROL  [initandlisten] db version v3.2.10
+2017-04-26T14:58:06.879+0800 I CONTROL  [initandlisten] git version: 79d9b3ab5ce20f51c272b4411202710a082d0317
+2017-04-26T14:58:06.879+0800 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.2j  26 Sep 2016
+2017-04-26T14:58:06.879+0800 I CONTROL  [initandlisten] allocator: system
+2017-04-26T14:58:06.879+0800 I CONTROL  [initandlisten] modules: none
+2017-04-26T14:58:06.879+0800 I CONTROL  [initandlisten] build environment:
+2017-04-26T14:58:06.879+0800 I CONTROL  [initandlisten]     distarch: x86_64
+2017-04-26T14:58:06.879+0800 I CONTROL  [initandlisten]     target_arch: x86_64
+2017-04-26T14:58:06.879+0800 I CONTROL  [initandlisten] options: {}
+2017-04-26T14:58:06.880+0800 E NETWORK  [initandlisten] listen(): bind() failed errno:48 Address already in use for socket: 0.0.0.0:27017
+2017-04-26T14:58:06.880+0800 E NETWORK  [initandlisten]   addr already in use
+2017-04-26T14:58:06.880+0800 E STORAGE  [initandlisten] Failed to set up sockets during startup.
+2017-04-26T14:58:06.881+0800 I CONTROL  [initandlisten] dbexit:  rc: 48
