@@ -9,7 +9,8 @@ const platformModel = require('../models/paas/platform');
 const pvModel = require('../models/saas/pageview');
 
 const nginxModel = platformModel.nginx;
-const nginxServer = config.nginxServer;
+const statisticsServer = config.statisticsServer;
+const delStatisticsServer = config.delStatisticsServer;
 
 module.exports = function () {
   console.log('nginxMiner start');
@@ -18,9 +19,9 @@ module.exports = function () {
     function () { return true; },
     function (callback) {
       let result = {};
-      request(config.statisticsServer, function (error, response, body) {
+      request(statisticsServer, function (error, response, body) {
         if (body) {
-          request(config.delStatisticsServer);
+          request(delStatisticsServer);
           let counter = 0;
           let records = body.split(/\n/);
           records.forEach((record, index) => {

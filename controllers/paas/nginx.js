@@ -8,7 +8,7 @@ const configModel = require('../../models/config/config');
 const platformModel = require('../../models/paas/platform');
 
 const nginxModel = platformModel.nginx;
-const nginxServer = config.nginxServer;
+const nginxServer = config.statisticsServer;
 
 exports.getNginxInfoByDomainAndUri = function* (next) {
   if (!_.isEmpty(this.query)) {
@@ -63,7 +63,7 @@ exports.getAllNginxInfoByDomain = function* (next) {
     let self = this;
     let domain = this.query.domain;
 
-    yield rp(`http://${nginxServer}/statistics`)
+    yield rp(nginxServer)
       .then(function (body) {
         if (body) {
           let result = {};
@@ -75,10 +75,10 @@ exports.getAllNginxInfoByDomain = function* (next) {
               return;
             }
             let uri = temp[1];
-            if (uri === '/statistics') {
+            let param = temp[2];
+            if (param === 'page_view') {
               return;
             }
-            let param = temp[2];
             let val = temp[3];
             if (result[uri]) {
               result[uri][param] = val;
