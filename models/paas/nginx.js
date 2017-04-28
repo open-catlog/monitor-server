@@ -55,7 +55,7 @@ nginxSchema.statics.getRecentByDomainAndUri = function (domain, uri, hours) {
   return new Promise(function (resolve, reject) {
     context.find({
       domain: domain,
-      uri: eval('/' + uri + '/'),
+      uri: {$regex: uri},
       create_at: {
         $gte: hoursAgo.toDate(),
         $lt: now.toDate()

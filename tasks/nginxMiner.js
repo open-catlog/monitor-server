@@ -14,11 +14,11 @@ const delStatisticsServer = config.delStatisticsServer;
 
 module.exports = function () {
   console.log('nginxMiner start');
-  let date = moment().format('YYYYMMDD');
   async.whilst(
     function () { return true; },
     function (callback) {
       let result = {};
+      let date = moment().format('YYYYMMDD');
       request(statisticsServer, function (error, response, body) {
         if (body) {
           request(delStatisticsServer);
