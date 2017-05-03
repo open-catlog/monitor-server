@@ -9,6 +9,7 @@ const mysqlController = require('./controllers/paas/mysql');
 const tomcatController = require('./controllers/paas/tomcat');
 const configController = require('./controllers/config/config');
 const hardwareController = require('./controllers/iaas/hardware');
+const thresholdController = require('./controllers/config/threshold');
 
 const routerRoot = new router();
 routerRoot.all('/ticket_login', authController.ticketLogin);
@@ -37,6 +38,7 @@ logicPage.get('/saas/getPVByDate', mapController.getPVByDate);
 logicPage.get('/saas/getUVByDate', mapController.getUVByDate);
 logicPage.post('/config/setConfig', configController.setConfig);
 logicPage.get('/config/getConfig', configController.getConfig);
+logicPage.post('/config/setThreshold', thresholdController.setThreshold);
 
 module.exports = function (app) {
   app
