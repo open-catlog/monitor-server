@@ -72,6 +72,21 @@ thresholdSchema.statics.get = function (type, name) {
   });
 };
 
+thresholdSchema.statics.getByType = function (type) {
+  let context = this;
+  return new Promise(function (resolve, reject) {
+    context.find({
+      type: type
+    }, function (err, data) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    });
+  });
+};
+
 mongoose.model('threshold', thresholdSchema);
 const threshold = mongoose.model('threshold');
 

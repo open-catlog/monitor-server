@@ -5,8 +5,8 @@ const moment = require('moment');
 const request = require('request');
 
 const config = require('../config');
-const platformModel = require('../models/paas/platform');
 const pvModel = require('../models/saas/pageview');
+const platformModel = require('../models/paas/platform');
 
 const nginxModel = platformModel.nginx;
 const statisticsServer = config.statisticsServer;

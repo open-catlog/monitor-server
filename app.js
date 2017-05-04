@@ -12,9 +12,9 @@ const models = require('./models');
 const config = require('./config');
 const routers = require('./routers');
 const cleaner = require('./tasks/cleaner')();
-const mysqlMiner = require('./tasks/mysqlMiner')();
+const mysqlMiner = require('./tasks/mysqlMiner').miner();
 const nginxMiner = require('./tasks/nginxMiner')();
-const hardwareMiner = require('./tasks/hardwareMiner')();
+const hardwareMiner = require('./tasks/hardwareMiner').miner();
 
 var app = new koa();
 
