@@ -25,6 +25,13 @@ exports.miner = function () {
     let updateNotify = true;
     let insertNotify = true;
     let deleteNotify = true;
+
+    let connectionTimeoutId;
+    let selectTimeoutId;
+    let updateTimeoutId;
+    let insertTimeoutId;
+    let deleteTimeoutId;
+
     let result = yield thresholdModel.getByType('mysql');
 
     event.on('change', function () {
@@ -35,6 +42,12 @@ exports.miner = function () {
         updateNotify = true;
         insertNotify = true;
         deleteNotify = true;
+
+        clearTimeout(connectionTimeoutId);
+        clearTimeout(selectTimeoutId);
+        clearTimeout(updateTimeoutId);
+        clearTimeout(insertTimeoutId);
+        clearTimeout(deleteTimeoutId);
       });
     });
 
@@ -44,7 +57,7 @@ exports.miner = function () {
           template.markdown.text = '指标：MySQL连接数\n\n数据库：' + database + '\n\n阈值：' + threshold +
             '\n\n数值：' + value + '\n\n时间：' + moment().format('YYYY-MM-DD HH:mm:ss');
           connectionNotify = false;
-          setTimeout(function () {
+          connectionTimeoutId = setTimeout(function () {
             connectionNotify = true;
           }, MinutesGap * 60 * 1000);
           break;
@@ -52,7 +65,7 @@ exports.miner = function () {
           template.markdown.text = '指标：select语句执行次数\n\n数据库：' + database + '\n\n阈值：' + threshold +
             '\n\n数值：' + value + '\n\n时间：' + moment().format('YYYY-MM-DD HH:mm:ss');
           selectNotify = false;
-          setTimeout(function () {
+          selectTimeoutId = setTimeout(function () {
             selectNotify = true;
           }, MinutesGap * 60 * 1000);
           break;
@@ -60,7 +73,7 @@ exports.miner = function () {
           template.markdown.text = '指标：update语句执行次数\n\n数据库：' + database + '\n\n阈值：' + threshold +
             '\n\n数值：' + value + '\n\n时间：' + moment().format('YYYY-MM-DD HH:mm:ss');
           updateNotify = false;
-          setTimeout(function () {
+          updateTimeoutId = setTimeout(function () {
             updateNotify = true;
           }, MinutesGap * 60 * 1000);
           break;
@@ -68,7 +81,7 @@ exports.miner = function () {
           template.markdown.text = '指标：insert语句执行次数\n\n数据库：' + database + '\n\n阈值：' + threshold +
             '\n\n数值：' + value + '\n\n时间：' + moment().format('YYYY-MM-DD HH:mm:ss');
           insertNotify = false;
-          setTimeout(function () {
+          insertTimeoutId = setTimeout(function () {
             insertNotify = true;
           }, MinutesGap * 60 * 1000);
           break;
@@ -76,7 +89,7 @@ exports.miner = function () {
           template.markdown.text = '指标：delete语句执行次数\n\n数据库：' + database + '\n\n阈值：' + threshold +
             '\n\n数值：' + value + '\n\n时间：' + moment().format('YYYY-MM-DD HH:mm:ss');
           deleteNotify = false;
-          setTimeout(function () {
+          deleteTimeoutId = setTimeout(function () {
             deleteNotify = true;
           }, MinutesGap * 60 * 1000);
           break;

@@ -31,6 +31,14 @@ exports.miner = function () {
     let ioNotify = true;
     let memoryNotify = true;
     let networkNotify = true;
+
+    let cpuTimeoutId;
+    let diskTimeoutId;
+    let processTimeoutId;
+    let ioTimeoutId;
+    let memoryTimeoutId;
+    let networkTimeoutId;
+
     let result = yield thresholdModel.getByType('hardware');
 
     event.on('change', function () {
@@ -42,6 +50,13 @@ exports.miner = function () {
         ioNotify = true;
         memoryNotify = true;
         networkNotify = true;
+
+        clearTimeout(cpuTimeoutId);
+        clearTimeout(diskTimeoutId);
+        clearTimeout(processTimeoutId);
+        clearTimeout(ioTimeoutId);
+        clearTimeout(memoryTimeoutId);
+        clearTimeout(networkTimeoutId);
       });
     });
 
@@ -51,7 +66,7 @@ exports.miner = function () {
           template.markdown.text = '指标：CPU利用率\n\n' + '阈值：' + threshold + '\n\n' +
             '数值：' + value + '\n\n' + '时间：' + moment().format('YYYY-MM-DD HH:mm:ss');
           cpuNotify = false;
-          setTimeout(function () {
+          cpuTimeoutId = setTimeout(function () {
             cpuNotify = true;
           }, MinutesGap * 60 * 1000);
           break;
@@ -59,7 +74,7 @@ exports.miner = function () {
           template.markdown.text = '指标：磁盘占用比例\n\n' + '阈值：' + threshold + '\n\n' +
             '数值：' + value + '\n\n' + '时间：' + moment().format('YYYY-MM-DD HH:mm:ss');;
           diskNotify = false;
-          setTimeout(function () {
+          diskTimeoutId = setTimeout(function () {
             diskNotify = true;
           }, MinutesGap * 60 * 1000);
           break;
@@ -67,7 +82,7 @@ exports.miner = function () {
           template.markdown.text = '指标：线程数\n\n' + '阈值：' + threshold + '\n\n' +
             '数值：' + value + '\n\n' + '时间：' + moment().format('YYYY-MM-DD HH:mm:ss');
           processNotify = false;
-          setTimeout(function () {
+          processTimeoutId = setTimeout(function () {
             processNotify = true;
           }, MinutesGap * 60 * 1000);
           break;
@@ -75,7 +90,7 @@ exports.miner = function () {
           template.markdown.text = '指标：I/O读写\n\n' + '阈值：' + threshold + '\n\n' +
             '数值：' + value + '\n\n' + '时间：' + moment().format('YYYY-MM-DD HH:mm:ss');
           ioNotify = false;
-          setTimeout(function () {
+          ioTimeoutId = setTimeout(function () {
             ioNotify = true;
           }, MinutesGap * 60 * 1000);
           break;
@@ -83,7 +98,7 @@ exports.miner = function () {
           template.markdown.text = '指标：内存空闲比例\n\n' + '阈值：' + threshold + '\n\n' +
             '数值：' + value + '\n\n' + '时间：' + moment().format('YYYY-MM-DD HH:mm:ss');
           memoryNotify = false;
-          setTimeout(function () {
+          memoryTimeoutId = setTimeout(function () {
             memoryNotify = true;
           }, MinutesGap * 60 * 1000);
           break;
@@ -91,7 +106,7 @@ exports.miner = function () {
           template.markdown.text = '指标：网络传输速率\n\n' + '阈值：' + threshold + '\n\n' +
             '数值：' + value + '\n\n' + '时间：' + moment().format('YYYY-MM-DD HH:mm:ss');
           networkNotify = false;
-          setTimeout(function () {
+          networkTimeoutId = setTimeout(function () {
             networkNotify = true;
           }, MinutesGap * 60 * 1000);
           break;

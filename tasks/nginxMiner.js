@@ -45,55 +45,57 @@ module.exports = function () {
                 result[domain][uriOrIp][param] = val;
               }
             } else {
-              setTimeout(function () {
-                let retry = 3;
-                let tempIntervalId = setInterval(function () {
-                  pvModel
-                    .getByDateAndDomainAndIp(date, domain, uriOrIp)
-                    .then(data => {
-                      if (data.length) {
-                        data.forEach((value, index) => {
-                          let _id = data[index]._id;
-                          let _pv = data[index].pv;
-                          pvModel.updatePV(_id, _pv + parseInt(val))
-                        });
-                        clearInterval(tempIntervalId);
-                      } else {
-                        let province;
-                        pvModel
-                          .getProvinceByIp(uriOrIp)
-                          .then(provinces => {
-                            if (provinces && provinces.length) {
-                              province = provinces[0].province;
-                              pvModel.add(date, domain, uriOrIp, val, province);
-                              clearInterval(tempIntervalId);
-                            } else if (retry <= 0) {
-                              clearInterval(tempIntervalId);
-                            } else {
-                              retry--;
-                              request(`http://ip.taobao.com/service/getIpInfo.php?ip=${uriOrIp}`, function (err, response, body) {
-                                if (body) {
-                                  let result;
-                                  try {
-                                    result = JSON.parse(decodeURI(body));
-                                  } catch (e) {
-                                    result = {};
-                                  }
-                                  if (result.code === 0) {
-                                    clearInterval(tempIntervalId);
-                                    if (result.data.country_id === 'CN') {
-                                      province = result.data.region;
-                                      pvModel.add(date, domain, uriOrIp, val, province);
+              if (domain === 'shopappserver.showjoy.com' || domain === 'shop.m.showjoy.com') {
+                setTimeout(function () {
+                  let retry = 3;
+                  let tempIntervalId = setInterval(function () {
+                    pvModel
+                      .getByDateAndDomainAndIp(date, domain, uriOrIp)
+                      .then(data => {
+                        if (data.length) {
+                          data.forEach((value, index) => {
+                            let _id = data[index]._id;
+                            let _pv = data[index].pv;
+                            pvModel.updatePV(_id, _pv + parseInt(val))
+                          });
+                          clearInterval(tempIntervalId);
+                        } else {
+                          let province;
+                          pvModel
+                            .getProvinceByIp(uriOrIp)
+                            .then(provinces => {
+                              if (provinces && provinces.length) {
+                                province = provinces[0].province;
+                                pvModel.add(date, domain, uriOrIp, val, province);
+                                clearInterval(tempIntervalId);
+                              } else if (retry <= 0) {
+                                clearInterval(tempIntervalId);
+                              } else {
+                                retry--;
+                                request(`http://ip.taobao.com/service/getIpInfo.php?ip=${uriOrIp}`, function (err, response, body) {
+                                  if (body) {
+                                    let result;
+                                    try {
+                                      result = JSON.parse(decodeURI(body));
+                                    } catch (e) {
+                                      result = {};
+                                    }
+                                    if (result.code === 0) {
+                                      clearInterval(tempIntervalId);
+                                      if (result.data.country_id === 'CN') {
+                                        province = result.data.region;
+                                        pvModel.add(date, domain, uriOrIp, val, province);
+                                      }
                                     }
                                   }
-                                }
-                              });
-                            }
-                          });
-                      }
-                    })
-                }, 30 * 1000);
-              }, counter * 110);
+                                });
+                              }
+                            });
+                        }
+                      })
+                  }, 30 * 1000);
+                }, counter * 110);
+              }
             }
           });
           Object.keys(result).forEach(domain => {
