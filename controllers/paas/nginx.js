@@ -59,7 +59,6 @@ exports.getNginxInfoByDomainAndUri = function* (next) {
 
 exports.getAllNginxInfoByDomain = function* (next) {
   if (!_.isEmpty(this.query)) {
-    let port;
     let self = this;
     let domain = this.query.domain;
 

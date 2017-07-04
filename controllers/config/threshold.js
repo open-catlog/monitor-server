@@ -11,7 +11,6 @@ exports.setThreshold = function* (next) {
     let names = this.request.body.names;
     let type = this.request.body.type;
     let data = this.request.body.data;
-
     try {
       if (names && names.length) {
         for (let i = 0; i < names.length; i++) {

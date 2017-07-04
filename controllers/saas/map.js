@@ -2,8 +2,6 @@
 
 const _ = require('lodash');
 
-const config = require('../../config');
-const configModel = require('../../models/config/config');
 const pageviewModel = require('../../models/saas/pageview');
 
 const suffixes = ['省', '市', '回族自治区', '维吾尔自治区', '自治区'];

@@ -18,6 +18,18 @@ const hardwareMiner = require('./tasks/hardwareMiner').miner();
 
 var app = new koa();
 
+var mocking = false;
+
+models.connect(function (err, result) {
+  if (err)  {
+    throw err;
+  }
+  if (!result) {
+    mocking = true;
+  }
+  routers(app, mocking);
+});
+
 render(app, {
   root: path.join(__dirname, 'public'),
   layout: false,
@@ -33,8 +45,6 @@ const options = {
 app.use(serve('.'));
 app.use(cors(options));
 app.use(bodyParser());
-
-routers(app);
 
 detect(config.port, (err, _port) => {
   if (err) {

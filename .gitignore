@@ -6,4 +6,3 @@ build/
 Thumbs.db
 *.sw*
 *.un~
-/config.js
