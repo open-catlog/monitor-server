@@ -45,7 +45,7 @@ module.exports = function () {
                 result[domain][uriOrIp][param] = val;
               }
             } else {
-              if (domain === 'shopappserver.showjoy.com' || domain === 'shop.m.showjoy.com') {
+              if (domain === '---' || domain === '---') {
                 setTimeout(function () {
                   let retry = 3;
                   let tempIntervalId = setInterval(function () {
