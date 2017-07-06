@@ -17,7 +17,7 @@
   - 采集和清理数据：
       - tasks/cleaner.js：定时进行数据库中的数据清理
       - tasks/hardwareMiner.js：收集各个服务器的硬件信息，硬件信息采集模块见 [os_tools](https://github.com/open-catlog/os_tools)
-      - tasks/mysqlMiner.js：收集 MySQL 的增删改查次数信息，MySQL信息采集模块见 [mysqk_tools](https://github.com/open-catlog/mysql_tools)
+      - tasks/mysqlMiner.js：收集 MySQL 的增删改查次数信息，MySQL信息采集模块见 [mysql_tools](https://github.com/open-catlog/mysql_tools)
       - tasks/nginxMiner.js：由于 Nginx 本身是 Web 服务器，所以可以直接通过 HTTP 请求进行数据获取，Nginx 的相关配置示例见 [nginxMonitor](https://github.com/open-catlog/nginxMonitor)
 
 ## 3. 运行步骤
